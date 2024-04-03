@@ -73,7 +73,6 @@ function createCharacter($fullName, $wand, $pet, $birthdate, $species, $patronus
         $conn->commit();
     }
     catch (PDOException $error) {
-        // If an error occurs, roll back the transaction
         $conn->rollBack();
         echo "Error: " . $error->getMessage();
     }
@@ -161,7 +160,6 @@ function updateCharacter($charId, $wand, $pet, $birthdate, $species, $patronus, 
         $charStmt->execute();
 
         if ($relatedCharId !== null && $relationType !== null) {
-            // Check if there is an existing relation with these two characters
             $relationCheckQuery = "SELECT * FROM relations WHERE (charId1 = :charId AND charId2 = :relatedCharId) OR (charId1 = :relatedCharId AND charId2 = :charId);";
             $relationCheckStmt = $conn->prepare($relationCheckQuery);
             $relationCheckStmt->bindParam(":charId", $charId);

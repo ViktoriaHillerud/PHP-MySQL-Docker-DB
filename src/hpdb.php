@@ -3,7 +3,6 @@
 This file creates the connection to the database by creating
 a PDO object
 
-This connection is used in "crud.php" file
 */
 
 function connectDB()
