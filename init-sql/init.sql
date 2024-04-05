@@ -11,6 +11,14 @@ CREATE TABLE IF NOT EXISTS Characters (
 	PRIMARY KEY (charId)
 );
 
+CREATE TABLE IF NOT EXISTS users (
+	userId int NOT NULL AUTO_INCREMENT, 
+	username varchar(50) NOT NULL,
+	email varchar(50) NOT NULL,
+	pass varchar(50) NOT NULL,
+	PRIMARY KEY (userId)
+);
+
 CREATE TABLE IF NOT EXISTS relations (
     relationId int NOT NULL AUTO_INCREMENT,
     charId1 int NOT NULL,

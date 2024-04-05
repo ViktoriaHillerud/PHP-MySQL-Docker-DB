@@ -7,6 +7,7 @@
 
 <body>
 	<h1>Welcome to the HP-database!</h1>
+	<a href="login.php" name="login">Account</a>
 
 	<form method="GET" action="<?php echo $_SERVER["PHP_SELF"] ?>">
 	<label>Search HP-characters:</label>

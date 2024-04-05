@@ -28,6 +28,28 @@ function characterExists($fullName) {
     }
 }
 
+function userExists($email) {
+    $conn = connectDB();
+
+    $email = sanitize($email);
+
+    $query = "SELECT COUNT(*) FROM users WHERE email = :email";
+    
+    try {
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(":email", $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $count = $stmt->fetchColumn();
+
+        return $count > 0;
+    }
+    catch (PDOException $error) {
+        echo "Error: " . $error->getMessage();
+        return false; 
+    }
+}
+
 
 function createCharacter($fullName, $wand, $pet, $birthdate, $species, $patronus, $quote, $relatedCharId = null, $relationType = null)
 {
@@ -208,6 +230,70 @@ function getCharacterRelations($charId) {
         return null;
     }
 }
+
+function register($username, $email, $pass) {
+    $conn = connectDB();
+
+
+	if (userExists($email)) {
+        echo "User  " . htmlspecialchars($email) . " already exists.";
+        return;
+    }
+    $username = sanitize($username);
+    $email = sanitize($email);
+    $pass = sanitize($pass);
+
+    $hashedPassword = password_hash($pass, PASSWORD_DEFAULT);
+
+    try {
+        
+        $conn->beginTransaction();
+
+        $query = "INSERT INTO users (username, email, pass) VALUES (:username, :email, :hashedPassword)";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(":username", $username);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":hashedPassword", $hashedPassword); 
+        $stmt->execute();
+
+        $conn->commit();
+
+		return true;
+
+    } catch (PDOException $error) {
+        $conn->rollBack();
+        echo "Error: " . $error->getMessage();
+    }
+}
+
+
+function login($username, $password) {
+    $conn = connectDB();
+
+    $username = sanitize($username);
+    $password = sanitize($password);
+
+    $query = "SELECT * FROM users WHERE username = :username";
+
+    try {
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($password, $user['pass'])) {
+            return $user; 
+        } else {
+            return false;
+        }
+    }
+    catch (PDOException $error) {
+        echo "Error: " . $error->getMessage();
+        return false;
+    }
+}
+
 
 
 
