@@ -19,6 +19,12 @@ if (isset($_GET["favouriteCharacter"]) && $userId) {
     header("Location: profile.php");
     exit();
 }
+
+if (isset($_GET['logout'])) {
+    logout();
+    header("Location: hp.php"); 
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -62,5 +68,7 @@ if (isset($_GET["favouriteCharacter"]) && $userId) {
 	</form>
 
 	<a href="hp.php">Tillbaka</a>
+	<a href="profile.php?logout=true">Logout</a>
+
 </body>
 </html>
