@@ -5,7 +5,7 @@ include 'hpcrud.php';
 
 $userId = isset($_SESSION['userId']) ? $_SESSION['userId'] : null;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteChar'])) {
+if (isset($_POST['deleteChar'])) {
     $charIdToDelete = (int)$_POST['deleteChar']; 
     deleteFavouriteChar($userId, $charIdToDelete);
     header("Location: profile.php");
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteChar'])) {
 
 $favourites = $userId ? getUserFavourites($userId) : [];
 
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET["favouriteCharacter"]) && $userId) {
+if (isset($_GET["favouriteCharacter"]) && $userId) {
     createFavouriteChar($userId, $_GET["favouriteCharacter"]);
     header("Location: profile.php");
     exit();

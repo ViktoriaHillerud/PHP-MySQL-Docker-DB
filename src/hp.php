@@ -187,8 +187,9 @@ function showRelationTypeInput() {
     var inputContainer = document.getElementById('relationTypeInput');
     
     if (selectedCharacter) {
-        inputContainer.innerHTML = `<label for="relationType">Relation Type:</label><br>
-                                    <input type="text" name="relationType" id="relationType"><br>`;
+        inputContainer.innerHTML = 
+		`<label for="relationType">Relation Type:</label><br>
+        <input type="text" name="relationType" id="relationType"><br>`;
     } else {
        
         inputContainer.innerHTML = '';
