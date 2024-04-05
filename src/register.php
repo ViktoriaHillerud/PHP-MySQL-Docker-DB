@@ -5,11 +5,17 @@ ini_set('display_errors', 1);
 include 'hpcrud.php';
 
 if (isset($_POST["register"])) {
+    session_unset();
+    
     if (empty($_POST["username"]) || empty($_POST["email"]) || empty($_POST["password"])) {
         $message = "<center><h1>Please fill all the fields</h1></center>";
     } else {
-        if (register($_POST["username"], $_POST["email"], $_POST["password"])) {
+        $userId = register($_POST["username"], $_POST["email"], $_POST["password"]);
+        if ($userId) {
+            // Set the username and userId in the session
             $_SESSION["username"] = $_POST["username"];
+            $_SESSION["userId"] = $userId;
+
             header("Location: hp.php");
             exit();
         } else {

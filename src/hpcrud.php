@@ -278,9 +278,11 @@ function register($username, $email, $pass) {
         $stmt->bindParam(":hashedPassword", $hashedPassword); 
         $stmt->execute();
 
+		$userId = $conn->lastInsertId();
+
         $conn->commit();
 
-		return true;
+		return $userId;
 
     } catch (PDOException $error) {
         $conn->rollBack();
