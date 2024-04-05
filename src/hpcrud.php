@@ -212,7 +212,29 @@ function updateCharacter($charId, $wand, $pet, $birthdate, $species, $patronus, 
     }
 }
 
+function deleteFavouriteChar($userId, $charId)
+ {
+	$conn = connectDB();
 
+    $query = "DELETE FROM user_favorites WHERE userId = :userId AND charId = :charId";
+
+    try {
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':charId', $charId, PDO::PARAM_INT);
+        $stmt->execute();
+
+		if ($stmt->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    catch (PDOException $error) {
+        echo "Error: " . $error->getMessage();
+        return null;
+    }
+ }
 
 function getCharacterRelations($charId) {
     $conn = connectDB();
@@ -283,6 +305,8 @@ function login($username, $password) {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($user && password_verify($password, $user['pass'])) {
+			$_SESSION["username"] = $user['username'];
+			$_SESSION["userId"] = $user['userId']; 
             return $user; 
         } else {
             return false;
@@ -295,6 +319,34 @@ function login($username, $password) {
 }
 
 
+function getUserFavourites($userId) {
+    $conn = connectDB();
+    $favourites = array();
 
+    try {
+        $stmt = $conn->prepare("SELECT c.* FROM Characters c JOIN user_favorites uf ON c.charId = uf.charId WHERE uf.userId = :userId");
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        $favourites = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } 
+    catch (PDOException $error){
+        echo "Error: " . $error->getMessage();
+    }
+    return $favourites;
+}
 
+function createFavouriteChar($userId, $charId) {
+	$conn = connectDB();
+    try {
+        $stmt = $conn->prepare("INSERT INTO user_favorites (userId, charId) VALUES (:userId, :charId)");
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':charId', $charId, PDO::PARAM_INT);
+        $stmt->execute();
+        return true;
+    } 
+    catch (PDOException $error){
+        echo "Error: " . $error->getMessage();
+        return false;
+    }
+ }
 ?>

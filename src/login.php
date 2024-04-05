@@ -2,6 +2,11 @@
 session_start();
 include 'hpcrud.php';
 
+if(isset($_SESSION["username"])) {
+	header("Location: profile.php");
+    exit();
+} 
+
 if (isset($_POST["login"])) {
     if (empty($_POST["username"]) || empty($_POST["password"])) {
         echo "<center><h1>Please fill all the fields</h1></center>";
@@ -16,7 +21,6 @@ if (isset($_POST["login"])) {
         }
     }
 }
-
 
 ?>
 
