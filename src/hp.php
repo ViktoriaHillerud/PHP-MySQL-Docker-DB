@@ -5,17 +5,22 @@ session_start();
 
 
 <html lang="en">
+<link href="base.css" rel="stylesheet"/>
 
-<body>
+<body class="start">
+	<div class="startDiv">
 	<h1>Welcome to the HP-database!</h1>
 	<a href="login.php" name="login">Account</a>
 	<a href="register.php" name="register">Register</a>
 
+	<div class="searchForm">
 	<form method="GET" action="<?php echo $_SERVER["PHP_SELF"] ?>">
-	<label>Search HP-characters:</label>
+	<label class="searchlabel">Search HP-characters:</label>
 	<input type="text" name="searchQuery">
-	<button type="submit">Search</button>
+	<button class="searchBtn" type="submit">Search</button>
 	</form>
+	</div>
+	
 
 	
 	
@@ -44,7 +49,7 @@ session_start();
 
 <h4>Add a new character to the HP-collection</h4>
 
-<form method="post" action="<?php echo $_SERVER["PHP_SELF"] ?>">
+<form class="addForm" method="post" action="<?php echo $_SERVER["PHP_SELF"] ?>">
 	<label for="fullName">Name:</label><br>
 	<input type="text" name="fullName" id="fullName"><br>
 	<label for="wand">Wand:</label><br>
@@ -60,7 +65,7 @@ session_start();
 	<label for="quote">Quote:</label><br>
 	<input type="text" name="quote" id="quote"><br>
 	<label for="relatedCharacter">Related Character:</label><br>
-<select name="relatedCharacter" id="relatedCharacter" onchange="showRelationTypeInput()">
+<select class="select" name="relatedCharacter" id="relatedCharacter" onchange="showRelationTypeInput()">
     <option value="">Select a character...</option>
     <?php
         foreach (getAllCharacters() as $relCharacter) {
@@ -148,7 +153,7 @@ echo("<ul>");
             echo '<input type="text" name="relationType" id="relationType" value="' . htmlspecialchars($currentRelation['relationType']) . '"><br>';
         }
 ?>
-	<input type="submit" value="Update Character">
+	<input class="searchlabel" type="submit" value="Update Character">
 			</form>
 
 			<?php
@@ -180,7 +185,7 @@ echo("<ul>");
 	
 ?>
 
-
+</div>
 
 <script>
 function showRelationTypeInput() {

@@ -1,0 +1,49 @@
+
+.start {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	
+	
+}
+
+.startDiv {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+
+
+.addForm > input {
+	width: 200px;
+}
+
+
+
+.searchBtn {
+	margin: 10px;
+	width: 100px;
+	
+}
+
+.searchForm {
+display: flex;
+flex-direction: row;
+}
+
+.searchForm input {
+width: 200px;
+display: inline;
+}
+.start select {
+	margin-bottom: 10px;
+	width: 200px
+}
+
+
+.searchlabel {
+	margin-top: 10px;
+}
