@@ -60,5 +60,7 @@ if (isset($_GET["favouriteCharacter"]) && $userId) {
 		</select><br>
 		<input type="submit" value="Add Character">
 	</form>
+
+	<a href="hp.php">Tillbaka</a>
 </body>
 </html>
